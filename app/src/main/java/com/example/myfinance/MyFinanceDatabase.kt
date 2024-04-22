@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.myfinance.model.entity.Account
+import com.example.myfinance.model.entity.Profile
+import com.example.myfinance.model.entity.Transaction
+import com.example.myfinance.model.entity.TransactionType
 
 @Database(entities = [Profile::class, Account::class, Transaction::class, TransactionType::class], version = 1)
 abstract class MyFinanceDatabase: RoomDatabase() {

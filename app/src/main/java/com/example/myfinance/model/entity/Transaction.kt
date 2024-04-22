@@ -1,10 +1,11 @@
-package com.example.myfinance
+package com.example.myfinance.model.entity
 
 import android.icu.util.CurrencyAmount
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity(tableName = "transaction",
@@ -30,7 +31,11 @@ data class Transaction(
     val typeId: Long,
     @ColumnInfo(name = "account_id", index = true)
     val accountId: Long,
-    val amount: CurrencyAmount,
-    val date: LocalDateTime,
+    val amount: Long,
+    // ISO 4217 currency code
+    @ColumnInfo(name = "currency_code")
+    val currencyCode: String,
+    // UNIX timestamp
+    val date: Long,
     val description: String
 )
