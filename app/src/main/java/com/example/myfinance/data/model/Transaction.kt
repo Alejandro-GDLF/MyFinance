@@ -1,12 +1,9 @@
-package com.example.myfinance.model.entity
+package com.example.myfinance.data.model
 
-import android.icu.util.CurrencyAmount
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.math.BigDecimal
-import java.time.LocalDateTime
 
 @Entity(tableName = "transaction",
         foreignKeys = [

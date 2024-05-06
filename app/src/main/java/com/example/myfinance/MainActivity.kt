@@ -3,6 +3,7 @@ package com.example.myfinance
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myfinance.data.database.MyFinanceDatabase
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

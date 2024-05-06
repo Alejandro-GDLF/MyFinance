@@ -1,15 +1,19 @@
-package com.example.myfinance
+package com.example.myfinance.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.myfinance.model.entity.Account
-import com.example.myfinance.model.entity.Profile
-import com.example.myfinance.model.entity.Transaction
-import com.example.myfinance.model.entity.TransactionType
+import com.example.myfinance.R
+import com.example.myfinance.data.model.Account
+import com.example.myfinance.data.model.Profile
+import com.example.myfinance.data.model.Transaction
+import com.example.myfinance.data.model.TransactionType
 
-@Database(entities = [Profile::class, Account::class, Transaction::class, TransactionType::class], version = 1)
+@Database(
+    entities = [Profile::class, Account::class, Transaction::class, TransactionType::class],
+    version = 1
+)
 abstract class MyFinanceDatabase: RoomDatabase() {
     companion object {
         @Volatile
