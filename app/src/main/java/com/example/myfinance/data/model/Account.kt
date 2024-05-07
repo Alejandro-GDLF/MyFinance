@@ -21,7 +21,6 @@ data class Account(
     @ColumnInfo(name = "profile_id", index = true)
     val profileId: Long,
     val number: String,
-    val balance: Long,
     // ISO 4217 currency code
     @ColumnInfo(name = "currency_code")
     val currencyCode: String,
