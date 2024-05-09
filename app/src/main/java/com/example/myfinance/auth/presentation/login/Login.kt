@@ -29,10 +29,7 @@ import com.example.myfinance.R
 
 
 @Composable
-fun Login() {
-    var username by remember { mutableStateOf("Hello") }
-    var password by remember { mutableStateOf("") }
-
+fun Login(state: LoginState) {
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -45,18 +42,17 @@ fun Login() {
             contentDescription = "Somethign",
             modifier = Modifier
                 .aspectRatio(1 / 1f)
-                .width(70.dp)
         )
 
         OutlinedTextField (
-            value = username,
-            onValueChange = { username = it },
+            value = state.username,
+            onValueChange = { state.username = it },
             label = { Text(text = "Username") }
         )
 
         OutlinedTextField (
-            value = password,
-            onValueChange = { password = it },
+            value = state.password,
+            onValueChange = { state.password = it },
             label = { Text(text = "Password") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
@@ -66,5 +62,5 @@ fun Login() {
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    Login()
+    Login(LoginState())
 }
