@@ -12,8 +12,8 @@ import androidx.compose.ui.text.style.TextOverflow
 fun BoldSmallColumnText(
     boldText: String,
     smallText: String,
-    alignment: Alignment.Horizontal = Alignment.Start,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    alignment: Alignment.Horizontal = Alignment.Start
 ) {
     Column (
         horizontalAlignment = alignment,

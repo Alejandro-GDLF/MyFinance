@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myfinance.transaction.domain.Transaction
-import com.example.myfinance.transaction.domain.TransactionType
+import com.example.myfinance.transaction.domain.model.Transaction
+import com.example.myfinance.transaction.domain.model.TransactionType
 import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -44,7 +44,7 @@ fun TransactionListItem(transaction: Transaction) {
             BoldSmallColumnText(
                 boldText = transaction.description,
                 smallText = transaction.date.format(dateFormatter),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f, fill = true)
             )
 
             Spacer(modifier = Modifier.width(10.dp))
