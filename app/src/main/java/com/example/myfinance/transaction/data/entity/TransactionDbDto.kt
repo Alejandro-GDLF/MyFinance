@@ -8,7 +8,7 @@ import com.example.myfinance.account.data.entity.Account
 
 @Entity(tableName = "transaction",
         foreignKeys = [
-            ForeignKey(entity = TransactionType::class,
+            ForeignKey(entity = TransactionTypeDbDto::class,
                 parentColumns = arrayOf("id"),
                 childColumns = arrayOf("type_id"),
                 onDelete = ForeignKey.CASCADE,
@@ -22,7 +22,7 @@ import com.example.myfinance.account.data.entity.Account
             )
         ]
 )
-data class Transaction(
+data class TransactionDbDto(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     @ColumnInfo(name = "type_id", index = true)
