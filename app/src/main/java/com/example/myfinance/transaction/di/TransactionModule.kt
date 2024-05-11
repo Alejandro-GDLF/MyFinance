@@ -1,6 +1,7 @@
 package com.example.myfinance.transaction.di
 
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
+import com.example.myfinance.core.database.MyFinanceDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +20,8 @@ object TransactionModule {
     @Provides
     @Singleton
     fun provideCurrencyAmountFormatter(): CurrencyAmountFormatter = CurrencyAmountFormatter()
+
+    @Provides
+    @Singleton
+    fun provideTransactionDao(database: MyFinanceDatabase) = database.transactionDao()
 }
