@@ -1,9 +1,10 @@
-package com.example.myfinance.data.model
+package com.example.myfinance.transaction.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.myfinance.account.data.entity.Account
 
 @Entity(tableName = "transaction",
         foreignKeys = [
@@ -29,10 +30,9 @@ data class Transaction(
     @ColumnInfo(name = "account_id", index = true)
     val accountId: Long,
     val amount: Long,
-    // ISO 4217 currency code
+    val total: Long,
     @ColumnInfo(name = "currency_code")
-    val currencyCode: String,
-    // UNIX timestamp
-    val date: Long,
+    val currencyCode: String, // ISO 4217 currency code
+    val date: Long, // UNIX timestamp
     val description: String
 )

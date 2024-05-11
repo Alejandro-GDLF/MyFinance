@@ -1,9 +1,10 @@
-package com.example.myfinance.data.model
+package com.example.myfinance.account.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.myfinance.profile.data.dto.Profile
 
 @Entity(tableName = "account",
     foreignKeys = [

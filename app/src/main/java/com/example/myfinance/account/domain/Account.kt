@@ -1,4 +1,4 @@
-package com.example.myfinance.domain.model
+package com.example.myfinance.account.domain
 
 import android.icu.util.CurrencyAmount
 import java.time.LocalDateTime
