@@ -1,14 +1,14 @@
-package com.example.myfinance.data.database
+package com.example.myfinance.core.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.myfinance.R
-import com.example.myfinance.data.model.Account
-import com.example.myfinance.data.model.Profile
-import com.example.myfinance.data.model.Transaction
-import com.example.myfinance.data.model.TransactionType
+import com.example.myfinance.account.data.entity.Account
+import com.example.myfinance.profile.data.dto.Profile
+import com.example.myfinance.transaction.data.entity.Transaction
+import com.example.myfinance.transaction.data.entity.TransactionType
 
 @Database(
     entities = [Profile::class, Account::class, Transaction::class, TransactionType::class],
