@@ -1,6 +1,7 @@
 package com.example.myfinance.transaction.domain.model
 
-import android.icu.util.CurrencyAmount
+
+import com.example.myfinance.core.currency.CurrencyAmount
 import java.time.LocalDateTime
 
 data class Transaction(

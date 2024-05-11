@@ -1,6 +1,5 @@
 package com.example.myfinance.transaction.presentation.list.components
 
-import android.icu.util.CurrencyAmount
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,18 +15,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myfinance.core.currency.CurrencyAmount
+import com.example.myfinance.core.currency.CurrencyAmountFormatter
 import com.example.myfinance.transaction.domain.model.Transaction
 import com.example.myfinance.transaction.domain.model.TransactionType
-import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Currency
-import java.util.Locale
 
 @Composable
-fun TransactionListItem(transaction: Transaction) {
-    val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy")
-
+fun TransactionListItem(
+    transaction: Transaction,
+    dateTimeFormatter: DateTimeFormatter,
+    currencyAmountFormatter: CurrencyAmountFormatter
+) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -43,25 +44,20 @@ fun TransactionListItem(transaction: Transaction) {
         ) {
             BoldSmallColumnText(
                 boldText = transaction.description,
-                smallText = transaction.date.format(dateFormatter),
+                smallText = dateTimeFormatter.format(transaction.date),
                 modifier = Modifier.weight(1f, fill = true)
             )
 
             Spacer(modifier = Modifier.width(10.dp))
 
             BoldSmallColumnText(
-                boldText = formatCurrencyAmount(transaction.amount),
-                smallText = formatCurrencyAmount(transaction.total),
+                boldText = currencyAmountFormatter.format(transaction.amount),
+                smallText = currencyAmountFormatter.format(transaction.total),
                 alignment = Alignment.End,
                 modifier = Modifier.wrapContentWidth(Alignment.End)
             )
         }
     }
-}
-
-fun formatCurrencyAmount(amount: CurrencyAmount, locale: Locale = Locale.getDefault()): String {
-    val formatter = NumberFormat.getCurrencyInstance(locale)
-    return formatter.format(amount.number)
 }
 
 @Preview(showBackground = true)
@@ -73,11 +69,13 @@ fun TransactionListItemPreview() {
             Transaction(
                 id = 21,
                 type = TransactionType(32, "Type1"),
-                amount = CurrencyAmount(amount, Currency.getInstance("EUR")),
+                amount = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR")),
                 date = LocalDateTime.now(),
                 description = "Some descriptionsdfsd fwwcfwevf ewecvefv wefwe fwedc",
-                total = CurrencyAmount(amount, android.icu.util.Currency.getInstance("EUR"))
-            )
+                total = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR"))
+            ),
+            dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME,
+            currencyAmountFormatter = CurrencyAmountFormatter()
         )
     }
 }
