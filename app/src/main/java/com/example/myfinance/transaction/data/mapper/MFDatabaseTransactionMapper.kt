@@ -4,7 +4,7 @@ import com.example.myfinance.core.Mapper
 import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.transaction.data.dao.TransactionDao
 import com.example.myfinance.transaction.data.dao.TransactionTypeDao
-import com.example.myfinance.transaction.data.entity.TransactionDbDto
+import com.example.myfinance.transaction.data.entity.TransactionEntity
 import com.example.myfinance.transaction.domain.model.Transaction
 import java.time.Instant
 import java.time.LocalDateTime
@@ -17,9 +17,9 @@ class MFDatabaseTransactionMapper @Inject constructor(
     val transactionDao: TransactionDao,
     val transactionTypeDao: TransactionTypeDao,
     val transactionTypeMapper: MFDbTransactionTypeMapper
-): Mapper<TransactionDbDto, Transaction> {
-    override fun from(item: Transaction): TransactionDbDto {
-        return TransactionDbDto(
+): Mapper<TransactionEntity, Transaction> {
+    override fun from(item: Transaction): TransactionEntity {
+        return TransactionEntity(
             id = item.id,
             typeId = item.type.id,
             accountId = transactionDao.getAccountId(item.id),
@@ -31,7 +31,7 @@ class MFDatabaseTransactionMapper @Inject constructor(
         )
     }
 
-    override fun to(item: TransactionDbDto): Transaction {
+    override fun to(item: TransactionEntity): Transaction {
         return Transaction(
             id = item.id,
             type = transactionTypeMapper.to(transactionTypeDao.get(item.id)),

@@ -1,9 +1,9 @@
 package com.example.myfinance.transaction.data.dao
 
 import androidx.room.Dao
-import com.example.myfinance.transaction.data.entity.TransactionTypeDbDto
+import com.example.myfinance.transaction.data.entity.TransactionTypeEntity
 
 @Dao
 interface TransactionTypeDao {
-    fun get(id: Long): TransactionTypeDbDto
+    fun get(id: Long): TransactionTypeEntity
 }

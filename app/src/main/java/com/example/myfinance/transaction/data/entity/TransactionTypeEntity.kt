@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "transaction_type")
-data class TransactionTypeDbDto(
+data class TransactionTypeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val description: String

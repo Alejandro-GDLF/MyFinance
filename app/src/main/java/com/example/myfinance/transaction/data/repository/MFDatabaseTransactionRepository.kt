@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class MFDatabaseTransactionRepository @Inject constructor(
     val transactionDao: TransactionDao,
-    val mapper: Mapper<com.example.myfinance.transaction.data.entity.TransactionDbDto, Transaction>
+    val mapper: Mapper<com.example.myfinance.transaction.data.entity.TransactionEntity, Transaction>
 ): TransactionRepository {
 
     override suspend fun read(): List<Transaction> = withContext(Dispatchers.IO) {

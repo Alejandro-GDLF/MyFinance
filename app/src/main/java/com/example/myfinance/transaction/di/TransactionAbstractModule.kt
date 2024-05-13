@@ -3,8 +3,8 @@ package com.example.myfinance.transaction.di
 import com.example.myfinance.core.Mapper
 import com.example.myfinance.transaction.data.mapper.MFDatabaseTransactionMapper
 import com.example.myfinance.transaction.data.mapper.MFDbTransactionTypeMapper
-import com.example.myfinance.transaction.data.entity.TransactionDbDto
-import com.example.myfinance.transaction.data.entity.TransactionTypeDbDto
+import com.example.myfinance.transaction.data.entity.TransactionEntity
+import com.example.myfinance.transaction.data.entity.TransactionTypeEntity
 import com.example.myfinance.transaction.data.repository.MFDatabaseTransactionRepository
 import com.example.myfinance.transaction.domain.model.Transaction
 import com.example.myfinance.transaction.domain.model.TransactionType
@@ -27,10 +27,10 @@ abstract class TransactionAbstractModule {
     @Binds
     @Singleton
     abstract fun bindTransactionMapper( mapper: MFDatabaseTransactionMapper)
-        : Mapper<TransactionDbDto, Transaction>
+        : Mapper<TransactionEntity, Transaction>
 
     @Binds
     @Singleton
     abstract fun bindTransactionTypeMapper( mapper: MFDbTransactionTypeMapper)
-        : Mapper<TransactionType, TransactionTypeDbDto>
+        : Mapper<TransactionType, TransactionTypeEntity>
 }
