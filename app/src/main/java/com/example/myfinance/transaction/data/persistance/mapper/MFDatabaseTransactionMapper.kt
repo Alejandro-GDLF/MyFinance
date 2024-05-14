@@ -1,10 +1,10 @@
-package com.example.myfinance.transaction.data.mapper
+package com.example.myfinance.transaction.data.persistance.mapper
 
 import com.example.myfinance.core.Mapper
 import com.example.myfinance.core.currency.CurrencyAmount
-import com.example.myfinance.transaction.data.dao.TransactionDao
-import com.example.myfinance.transaction.data.dao.TransactionTypeDao
-import com.example.myfinance.transaction.data.entity.TransactionEntity
+import com.example.myfinance.transaction.data.persistance.dao.TransactionDao
+import com.example.myfinance.transaction.data.persistance.dao.TransactionTypeDao
+import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
 import com.example.myfinance.transaction.domain.model.Transaction
 import java.time.Instant
 import java.time.LocalDateTime

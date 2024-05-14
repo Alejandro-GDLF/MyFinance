@@ -18,13 +18,10 @@ import com.example.myfinance.profile.data.dto.Profile
 )
 data class Account(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     @ColumnInfo(name = "profile_id", index = true)
     val profileId: Long,
     val number: String,
-    // ISO 4217 currency code
-    @ColumnInfo(name = "currency_code")
-    val currencyCode: String,
     // UNIX time
     @ColumnInfo(name = "creation_date")
     val creationDate: Long

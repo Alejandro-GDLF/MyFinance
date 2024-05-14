@@ -1,7 +1,7 @@
-package com.example.myfinance.transaction.data.mapper
+package com.example.myfinance.transaction.data.persistance.mapper
 
 import com.example.myfinance.core.Mapper
-import com.example.myfinance.transaction.data.entity.TransactionTypeEntity
+import com.example.myfinance.transaction.data.persistance.entity.TransactionTypeEntity
 import com.example.myfinance.transaction.domain.model.TransactionType
 
 class MFDbTransactionTypeMapper: Mapper<TransactionTypeEntity, TransactionType> {

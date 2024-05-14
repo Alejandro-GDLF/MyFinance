@@ -1,4 +1,4 @@
-package com.example.myfinance.transaction.data.entity
+package com.example.myfinance.transaction.data.persistance.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -24,7 +24,7 @@ import com.example.myfinance.account.data.entity.Account
 )
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0L,
     @ColumnInfo(name = "type_id", index = true)
     val typeId: Long,
     @ColumnInfo(name = "account_id", index = true)

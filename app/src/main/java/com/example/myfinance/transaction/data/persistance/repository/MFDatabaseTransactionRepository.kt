@@ -1,7 +1,8 @@
-package com.example.myfinance.transaction.data.repository
+package com.example.myfinance.transaction.data.persistance.repository
 
 import com.example.myfinance.core.Mapper
-import com.example.myfinance.transaction.data.dao.TransactionDao
+import com.example.myfinance.transaction.data.persistance.dao.TransactionDao
+import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
 import com.example.myfinance.transaction.domain.model.Transaction
 import com.example.myfinance.transaction.domain.repository.TransactionRepository
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 class MFDatabaseTransactionRepository @Inject constructor(
     val transactionDao: TransactionDao,
-    val mapper: Mapper<com.example.myfinance.transaction.data.entity.TransactionEntity, Transaction>
+    val mapper: Mapper<TransactionEntity, Transaction>
 ): TransactionRepository {
 
     override suspend fun read(): List<Transaction> = withContext(Dispatchers.IO) {
