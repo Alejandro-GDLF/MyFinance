@@ -16,7 +16,7 @@ import com.example.myfinance.profile.data.dto.Profile
         )
     ]
 )
-data class Account(
+data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     @ColumnInfo(name = "profile_id", index = true)
