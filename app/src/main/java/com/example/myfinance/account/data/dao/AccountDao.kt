@@ -17,8 +17,8 @@ interface AccountDao {
     fun getByProfile(profileId: Long): List<AccountEntity>
 
     @Insert
-    fun insert(accountEntities: List<AccountEntity>)
+    fun insert(accountEntities: List<AccountEntity>): List<Long>
 
     @Insert
-    fun insert(accountEntity: AccountEntity)
+    fun insert(accountEntity: AccountEntity): Long
 }
