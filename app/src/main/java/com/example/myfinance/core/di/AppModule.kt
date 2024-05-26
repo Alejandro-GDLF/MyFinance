@@ -1,6 +1,7 @@
 package com.example.myfinance.core.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.myfinance.R
 import com.example.myfinance.core.database.MyFinanceDatabase
@@ -23,5 +24,14 @@ object AppModule {
             MyFinanceDatabase::class.java,
             appContext.getString(R.string.database_name)
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
+        return appContext.getSharedPreferences(
+            appContext.getString(R.string.shared_preferences),
+            Context.MODE_PRIVATE
+        )
     }
 }

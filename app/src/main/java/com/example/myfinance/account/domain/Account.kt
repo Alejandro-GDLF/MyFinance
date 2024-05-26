@@ -2,7 +2,10 @@ package com.example.myfinance.account.domain
 
 import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.transaction.domain.model.Transaction
+import java.math.BigDecimal
 import java.time.LocalDateTime
+import java.util.Currency
+import java.util.Locale
 
 /**
  * @brief Entity class representin an Account
@@ -10,12 +13,21 @@ import java.time.LocalDateTime
 data class Account (
     val id: Long?,
     val number: String,
-    private var _balance: CurrencyAmount,
     val creationDate: LocalDateTime,
     private val _transactions: MutableList<Transaction> = mutableListOf()
 ) {
     val balance: CurrencyAmount
-        get() = _balance
+        get() {
+            var balance =  CurrencyAmount(
+                    BigDecimal(0),
+                    Currency.getInstance(Locale.getDefault())
+            )
+
+            for( trans in _transactions )
+                balance = balance + trans.amount
+
+            return balance
+        }
 
     val transactions: List<Transaction>
         get() = _transactions.toList()

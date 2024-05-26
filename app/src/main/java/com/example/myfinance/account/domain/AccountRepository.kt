@@ -1,7 +1,11 @@
 package com.example.myfinance.account.domain
 
-interface AccountRepository {
-    suspend fun read(): List<Account>
+import com.example.myfinance.profile.domain.Profile
 
-    suspend fun save(account: Account)
+interface AccountRepository {
+    suspend fun getAll(): List<Account>
+
+    suspend fun get(id: Long): Account
+
+    suspend fun save(account: Account, profile: Profile)
 }

@@ -27,9 +27,9 @@ fun TransactionList(
 ) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth()
-            .border(1.dp, Color.Black),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
+
     ) {
         items(transactions) {transaction ->
             TransactionListItem(

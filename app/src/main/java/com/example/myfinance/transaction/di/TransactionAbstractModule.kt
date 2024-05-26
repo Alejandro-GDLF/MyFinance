@@ -1,11 +1,9 @@
 package com.example.myfinance.transaction.di
 
 import com.example.myfinance.core.Mapper
-import com.example.myfinance.transaction.data.persistance.mapper.MFDatabaseTransactionMapper
-import com.example.myfinance.transaction.data.persistance.mapper.MFDbTransactionTypeMapper
 import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
 import com.example.myfinance.transaction.data.persistance.entity.TransactionTypeEntity
-import com.example.myfinance.transaction.data.persistance.repository.MFDatabaseTransactionRepository
+import com.example.myfinance.transaction.data.persistance.repository.RoomTransactionRepository
 import com.example.myfinance.transaction.domain.model.Transaction
 import com.example.myfinance.transaction.domain.model.TransactionType
 import com.example.myfinance.transaction.domain.repository.TransactionRepository
@@ -21,16 +19,6 @@ abstract class TransactionAbstractModule {
 
     @Binds
     @Singleton
-    abstract fun bindTransactionRepository( repository: MFDatabaseTransactionRepository)
+    abstract fun bindTransactionRepository( repository: RoomTransactionRepository)
         : TransactionRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindTransactionMapper( mapper: MFDatabaseTransactionMapper)
-        : Mapper<TransactionEntity, Transaction>
-
-    @Binds
-    @Singleton
-    abstract fun bindTransactionTypeMapper( mapper: MFDbTransactionTypeMapper)
-        : Mapper<TransactionType, TransactionTypeEntity>
 }
