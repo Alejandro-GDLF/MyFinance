@@ -1,5 +1,6 @@
 package com.example.myfinance.account.data.repository
 
+import android.util.Log
 import com.example.myfinance.account.data.dao.AccountDao
 import com.example.myfinance.account.data.entity.AccountEntity
 import com.example.myfinance.account.data.mapper.RoomAccountMapper
@@ -29,6 +30,8 @@ class RoomAccountRepository @Inject constructor(
 
     override suspend fun get(id: Long): Account = withContext(Dispatchers.IO) {
         val account = accountDao.get(id)
+
+        Log.d("RoomAccountRepository", "Account with id = ${id} is ${account}")
 
         return@withContext mapper.toDomain(
             account,

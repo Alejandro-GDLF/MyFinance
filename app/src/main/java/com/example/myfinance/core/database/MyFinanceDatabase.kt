@@ -2,9 +2,11 @@ package com.example.myfinance.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.myfinance.account.data.dao.AccountDao
 import com.example.myfinance.account.data.entity.AccountEntity
 import com.example.myfinance.profile.data.dto.Profile
 import com.example.myfinance.transaction.data.persistance.dao.TransactionDao
+import com.example.myfinance.transaction.data.persistance.dao.TransactionTypeDao
 import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
 import com.example.myfinance.transaction.data.persistance.entity.TransactionTypeEntity
 
@@ -14,4 +16,6 @@ import com.example.myfinance.transaction.data.persistance.entity.TransactionType
 )
 abstract class MyFinanceDatabase: RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
+    abstract fun accountDao(): AccountDao
+    abstract fun transactionTypeDao(): TransactionTypeDao
 }

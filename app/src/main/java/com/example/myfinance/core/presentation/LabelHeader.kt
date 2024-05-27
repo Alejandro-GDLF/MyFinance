@@ -1,7 +1,9 @@
 package com.example.myfinance.core.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +17,8 @@ fun LabelHeader(text: String) {
         color = Color.Blue,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp)
+            .background(
+                MaterialTheme.colorScheme.background
+            )
     )
 }

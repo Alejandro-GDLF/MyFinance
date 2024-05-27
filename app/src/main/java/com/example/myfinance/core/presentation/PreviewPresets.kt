@@ -62,6 +62,38 @@ object PreviewPresets {
                 date = LocalDateTime.of(2002, Month.AUGUST, 13, 1, 1),
                 description = "Some description",
                 total = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR"))
+            ),
+            Transaction(
+                id = 21,
+                type = TransactionType(32, "Type1"),
+                amount = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR")),
+                date = LocalDateTime.now(),
+                description = "Some descriptiosdfwfwefwefwefwefn",
+                total = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR"))
+            ),
+            Transaction(
+                id = 21,
+                type = TransactionType(32, "Type1"),
+                amount = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR")),
+                date = LocalDateTime.now(),
+                description = "Some descriptiosdfwfwefwefwefwefn",
+                total = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR"))
+            ),
+            Transaction(
+                id = 21,
+                type = TransactionType(32, "Type1"),
+                amount = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR")),
+                date = LocalDateTime.now(),
+                description = "Some descriptiosdfwfwefwefwefwefn",
+                total = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR"))
+            ),
+            Transaction(
+                id = 21,
+                type = TransactionType(32, "Type1"),
+                amount = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR")),
+                date = LocalDateTime.now(),
+                description = "Some descriptiosdfwfwefwefwefwefn",
+                total = CurrencyAmount(amount.toBigDecimal(), Currency.getInstance("EUR"))
             )
         )
     )

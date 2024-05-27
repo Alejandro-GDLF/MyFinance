@@ -33,7 +33,7 @@ fun TransactionListItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Row(
