@@ -46,6 +46,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val accounts = profileRepository.getAccounts(profile)
             _state.update { st -> st.copy(accounts = accounts) }
+            if (accounts.isNotEmpty()) {
+                updateSelectedAccount(accounts[0])
+            }
         }
     }
 

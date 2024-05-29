@@ -32,7 +32,7 @@ fun BottomNavigationBar(navController: NavController) {
             NavigationBarItem(
                 selected = selectedItem == index,
                 icon = { Icon(navigationItem.icon, contentDescription = navigationItem.title) },
-                label = { Text(text = navigationItem.title) },
+                //label = { Text(text = navigationItem.title) },
                 alwaysShowLabel = false,
                 onClick = {
                     selectedItem = index

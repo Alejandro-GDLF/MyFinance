@@ -5,6 +5,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -63,9 +67,13 @@ fun NewTransaction(
         ) {
             Spacer(modifier = Modifier.height(20.dp))
 
+            var account by remember { mutableStateOf(state.accounts.firstOrNull()) }
             DropDownAccount(
                 options = state.accounts,
-                onSelectedAccount = updateSelectedAccount
+                defaultAccount = account,
+                onAccountSelected = { selectedAccount ->
+                    account = selectedAccount
+                }
             )
 
             OutlinedTextField(

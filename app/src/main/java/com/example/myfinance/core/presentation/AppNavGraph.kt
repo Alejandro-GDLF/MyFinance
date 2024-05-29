@@ -55,6 +55,7 @@ fun AppNavGraph(navController: NavHostController) {
                 val observer = LifecycleEventObserver {_, event ->
                     if( event == Lifecycle.Event.ON_RESUME){
                         viewModel.collectAccounts()
+
                     }
                 }
                 navBackStack?.lifecycle?.addObserver(observer)
