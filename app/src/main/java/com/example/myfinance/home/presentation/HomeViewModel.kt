@@ -2,9 +2,11 @@ package com.example.myfinance.home.presentation
 
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.compose.animation.core.updateTransition
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myfinance.account.domain.Account
 import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
 import com.example.myfinance.profile.domain.Profile
@@ -26,7 +28,7 @@ class HomeViewModel @Inject constructor(
 
     var _state = MutableStateFlow(HomeState(
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy"),
-        currencyFormatter = CurrencyAmountFormatter()
+        currencyFormatter = CurrencyAmountFormatter(),
     ))
     val state get() = _state.asStateFlow()
 
@@ -36,6 +38,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             profile = profileRepository.get(profileId)
             collectAccounts()
+            updateSelectedAccount(state.value.accounts.firstOrNull())
         }
     }
 
@@ -44,5 +47,9 @@ class HomeViewModel @Inject constructor(
             val accounts = profileRepository.getAccounts(profile)
             _state.update { st -> st.copy(accounts = accounts) }
         }
+    }
+
+    fun updateSelectedAccount(account: Account?) {
+        _state.update { st -> st.copy(selectedAccount = account) }
     }
 }

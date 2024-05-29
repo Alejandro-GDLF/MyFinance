@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedButton
@@ -21,23 +20,27 @@ import com.example.myfinance.account.domain.Account
 @Composable
 fun DropDownAccount(
     options: List<Account>,
-    onSelectedAccount: (Account) -> Unit
+    onSelectedAccount: (Account) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOption by remember { mutableStateOf(-1) }
-    
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp)) {
+    var selectedOption by remember { mutableStateOf(0) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
         Column {
             OutlinedButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = { expanded = true }) {
-                Text(text = if (selectedOption == -1) "Select an Account" else options.get(selectedOption).number)
+                Text(text = if (options.isEmpty()) "No accounts available" else options[selectedOption].number)
             }
 
             DropdownMenu(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {

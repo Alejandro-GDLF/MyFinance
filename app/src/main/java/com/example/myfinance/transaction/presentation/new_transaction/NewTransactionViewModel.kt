@@ -30,8 +30,8 @@ class NewTransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionTypeRepository: TransactionTypeRepository,
     private val transactionFactory: TransactionFactory
-): ViewModel() {
-    private var _state = MutableStateFlow( NewTransactionState() )
+) : ViewModel() {
+    private var _state = MutableStateFlow(NewTransactionState())
     val state get() = _state.asStateFlow()
 
     private lateinit var profile: Profile
@@ -42,11 +42,13 @@ class NewTransactionViewModel @Inject constructor(
 
             val accounts = profileRepository.getAccounts(profile)
             val types = transactionTypeRepository.getAll()
+            val defaultAccount = accounts.firstOrNull()
 
             _state.update { st -> st.copy(
                 accounts = accounts,
                 transactionType = types,
-                isLoading = false
+                isLoading = false,
+                selectedAccount = defaultAccount
             ) }
         }
     }
@@ -66,17 +68,17 @@ class NewTransactionViewModel @Inject constructor(
         _state.update { st -> st.copy(description = description) }
     }
 
-    fun updateDate (date: Date) {
+    fun updateDate(date: Date) {
         _state.update { st -> st.copy(
-            date= date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+            date = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
         ) }
     }
 
     fun updateAmount(amount: String) {
-        _state.update { st -> st.copy(amount = amount)}
+        _state.update { st -> st.copy(amount = amount) }
     }
 
-    fun updateType ( type: TransactionType) {
+    fun updateType(type: TransactionType) {
         _state.update { st -> st.copy(type = type) }
     }
 
@@ -87,7 +89,7 @@ class NewTransactionViewModel @Inject constructor(
         val amount = _state.value.amount?.toBigDecimalOrNull()
         val date = _state.value.date
 
-        if( description == null || account == null || type == null || amount == null || date == null )
+        if (description == null || account == null || type == null || amount == null || date == null)
             return
 
         val transaction = transactionFactory.create(
@@ -97,7 +99,7 @@ class NewTransactionViewModel @Inject constructor(
             date = date
         )
 
-        Log.d("Res", "Introducing new transaction ${transaction}")
+        Log.d("Res", "Introducing new transaction $transaction")
 
         viewModelScope.launch {
             transactionRepository.create(account, transaction)

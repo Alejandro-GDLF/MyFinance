@@ -1,22 +1,13 @@
 package com.example.myfinance.transaction.presentation.new_transaction
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,14 +16,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.account.domain.Account
 import com.example.myfinance.core.Constants
-import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.core.presentation.DatePickerButton
 import com.example.myfinance.core.presentation.DropDownAccount
 import com.example.myfinance.core.presentation.DropDownTransactionType
 import com.example.myfinance.transaction.domain.model.TransactionType
+import com.example.myfinance.core.presentation.CenterAlignedTopAppBar
 import java.time.LocalDateTime
-import java.util.Date
+import java.util.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewTransaction(
     state: NewTransactionState,
@@ -44,77 +36,87 @@ fun NewTransaction(
     updateType: (TransactionType) -> Unit,
     onCreateTransaction: () -> Unit
 ) {
-    if (state.isCreated ) {
+    if (state.isCreated) {
         navHostController.popBackStack("home", false)
         return
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Create new transaction",
-            style = MaterialTheme.typography.titleLarge
-        )
 
-        Spacer(modifier = Modifier.height(20.dp))
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
-        DropDownAccount(
-            options = state.accounts,
-            onSelectedAccount = updateSelectedAccount
-        )
-
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.description ?: "",
-            onValueChange = updateDescription,
-            label = { Text(text = "Description") }
-        )
-
-        DatePickerButton(
-            onDatePicked = updateDate
-        )
-
-        Row (
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = "Create new transaction",
+                onNavigationClick = { navHostController.navigateUp() },
+                hasMenuIcon = false
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OutlinedTextField(
-                value = state.amount ?: "",
-                onValueChange = updateAmount,
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            Spacer(modifier = Modifier.height(20.dp))
+
+            DropDownAccount(
+                options = state.accounts,
+                onSelectedAccount = updateSelectedAccount
             )
 
             OutlinedTextField(
-                value = "EUR",
-                onValueChange = {},
-                readOnly = true,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.None
-                ),
-                keyboardActions = KeyboardActions()
+                modifier = Modifier.fillMaxWidth(),
+                value = state.description ?: "",
+                onValueChange = updateDescription,
+                label = { Text(text = "Description") }
             )
-        }
 
-        DropDownTransactionType(
-            options = state.transactionType,
-            onSelected = updateType
-        )
+            DatePickerButton(
+                onDatePicked = updateDate
+            )
 
-        Button(
-            onClick = { navHostController.navigate("create_type") }) {
-            Text(text = "Create new type")
-        }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                OutlinedTextField(
+                    value = state.amount ?: "",
+                    onValueChange = updateAmount,
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                )
 
-        Spacer(modifier = Modifier.height(40.dp))
+                OutlinedTextField(
+                    value = "EUR",
+                    onValueChange = {},
+                    readOnly = true,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.None
+                    ),
+                    keyboardActions = KeyboardActions()
+                )
+            }
 
-        Button(
-            onClick = onCreateTransaction
-        ) {
-            Text(text = "Create transaction")
+            DropDownTransactionType(
+                options = state.transactionType,
+                onSelected = updateType
+            )
+
+            Button(
+                onClick = { navHostController.navigate("create_type") }) {
+                Text(text = "Create new type")
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Button(
+                onClick = onCreateTransaction
+            ) {
+                Text(text = "Create transaction")
+            }
         }
     }
 }
@@ -137,6 +139,6 @@ fun NewTransactionPreview() {
         updateDate = {},
         updateAmount = {},
         updateType = {},
-        onCreateTransaction = { }
+        onCreateTransaction = {}
     )
 }

@@ -8,5 +8,6 @@ data class HomeState(
     val accounts: List<Account> = listOf(),
     val dateFormatter: DateTimeFormatter,
     val currencyFormatter: CurrencyAmountFormatter,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val selectedAccount: Account? = null
 )
