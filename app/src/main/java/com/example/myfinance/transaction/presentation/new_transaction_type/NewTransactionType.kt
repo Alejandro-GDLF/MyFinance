@@ -24,7 +24,7 @@ fun NewTransactionType(
     onCreate: () -> Unit
 ) {
     if( state.isCreated ) {
-        navController.popBackStack()
+        navController.popBackStack("create_transaction", false)
         return
     }
 
