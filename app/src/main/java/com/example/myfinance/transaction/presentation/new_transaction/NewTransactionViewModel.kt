@@ -4,11 +4,10 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.Account
-import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.profile.domain.Profile
 import com.example.myfinance.profile.domain.ProfileRepository
-import com.example.myfinance.transaction.domain.model.TransactionFactory
+import com.example.myfinance.transaction.domain.TransactionFactory
 import com.example.myfinance.transaction.domain.model.TransactionType
 import com.example.myfinance.transaction.domain.repository.TransactionRepository
 import com.example.myfinance.transaction.domain.repository.TransactionTypeRepository
@@ -48,6 +47,13 @@ class NewTransactionViewModel @Inject constructor(
                 transactionType = types,
                 isLoading = false
             ) }
+        }
+    }
+
+    fun refreshTransactionTypes() {
+        viewModelScope.launch {
+            val transactionType = transactionTypeRepository.getAll()
+            _state.update { st -> st.copy(transactionType = transactionType) }
         }
     }
 

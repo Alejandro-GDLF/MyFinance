@@ -6,7 +6,7 @@ import com.example.myfinance.transaction.domain.model.TransactionType
 object RoomTransactionTypeMapper {
     fun toPersistance(item: TransactionType): TransactionTypeEntity {
         return TransactionTypeEntity(
-            id = item.id,
+            id = item.id ?: 0L,
             description = item.description
         )
     }

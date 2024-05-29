@@ -6,5 +6,5 @@ import com.example.myfinance.transaction.domain.model.Transaction
 interface TransactionRepository {
     suspend fun read(): List<Transaction>
 
-    suspend fun create(account: Account, transaction: Transaction): Boolean
+    suspend fun create(account: Account, transaction: Transaction): Long
 }

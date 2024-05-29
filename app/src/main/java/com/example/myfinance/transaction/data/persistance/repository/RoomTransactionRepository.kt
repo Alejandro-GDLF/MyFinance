@@ -26,7 +26,9 @@ class RoomTransactionRepository @Inject constructor(
         return@withContext transactions.map { mapper.toDomain(it, transactionTypeRepository.get(it.typeId)) }
     }
 
-    override suspend fun create(account: Account, transaction: Transaction): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun create(account: Account, transaction: Transaction): Long  = withContext(Dispatchers.IO){
+        val transactionEntity = mapper.toPersistance(transaction, account)
+
+        return@withContext transactionDao.insert(transactionEntity)
     }
 }

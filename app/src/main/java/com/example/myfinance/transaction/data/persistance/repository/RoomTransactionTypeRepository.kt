@@ -23,4 +23,10 @@ class RoomTransactionTypeRepository @Inject constructor (
 
         return@withContext types.map { mapper.toDomain(it) }
     }
+
+    override suspend fun save(transactionType: TransactionType): Long = withContext(Dispatchers.IO) {
+        val type = mapper.toPersistance(transactionType)
+
+        return@withContext transactionTypeDao.insert(type)
+    }
 }

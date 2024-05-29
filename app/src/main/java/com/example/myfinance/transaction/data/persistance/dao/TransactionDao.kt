@@ -1,6 +1,7 @@
 package com.example.myfinance.transaction.data.persistance.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
 
@@ -16,4 +17,7 @@ interface TransactionDao {
             "FROM `transaction` " +
             "WHERE account_id = :accountId")
     fun getSumAmountByAccountId(accountId: Long): Long
+
+    @Insert
+    fun insert(transaction: TransactionEntity): Long
 }

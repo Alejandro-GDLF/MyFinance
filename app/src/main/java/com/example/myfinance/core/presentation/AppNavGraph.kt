@@ -26,6 +26,8 @@ import com.example.myfinance.profile.presentation.profile_picker.ProfilePicker
 import com.example.myfinance.profile.presentation.profile_picker.ProfilePickerViewModel
 import com.example.myfinance.transaction.presentation.new_transaction.NewTransaction
 import com.example.myfinance.transaction.presentation.new_transaction.NewTransactionViewModel
+import com.example.myfinance.transaction.presentation.new_transaction_type.NewTransactionType
+import com.example.myfinance.transaction.presentation.new_transaction_type.NewTransactionTypeViewModel
 
 @SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
@@ -97,6 +99,18 @@ fun AppNavGraph(navController: NavHostController) {
             val viewModel: NewTransactionViewModel = hiltViewModel()
             val state by viewModel.state.collectAsState()
 
+            val navBackStack = navController.currentBackStackEntryAsState().value
+            DisposableEffect(navBackStack) {
+                val observer = LifecycleEventObserver {_, event ->
+                    if( event == Lifecycle.Event.ON_RESUME){
+                        viewModel.refreshTransactionTypes()
+                    }
+                }
+                navBackStack?.lifecycle?.addObserver(observer)
+
+                onDispose { navBackStack?.lifecycle?.removeObserver(observer) }
+            }
+
             NewTransaction(
                 state = state,
                 navHostController = navController,
@@ -106,6 +120,18 @@ fun AppNavGraph(navController: NavHostController) {
                 updateAmount = viewModel::updateAmount,
                 updateType = viewModel::updateType,
                 onCreateTransaction = viewModel::onCreateTransaction
+            )
+        }
+
+        composable("create_type") {
+            val viewModel: NewTransactionTypeViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsState()
+
+            NewTransactionType(
+                state = state,
+                navController = navController,
+                updateDescription = viewModel::updateDescription,
+                onCreate = viewModel::create
             )
         }
     }

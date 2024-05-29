@@ -1,6 +1,8 @@
-package com.example.myfinance.transaction.domain.model
+package com.example.myfinance.transaction.domain
 
 import com.example.myfinance.core.currency.CurrencyAmount
+import com.example.myfinance.transaction.domain.model.Transaction
+import com.example.myfinance.transaction.domain.model.TransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.inject.Inject
