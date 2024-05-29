@@ -58,10 +58,12 @@ fun AppNavGraph(navController: NavHostController) {
                 onDispose { navBackStack?.lifecycle?.removeObserver(observer) }
             }
 
-            HomeScreen(
-                state = state,
-                navController
-            )
+            AppScaffold(navController = navController) {
+                HomeScreen(
+                    state = state,
+                    navController
+                )
+            }
         }
 
         composable("create_profile") {

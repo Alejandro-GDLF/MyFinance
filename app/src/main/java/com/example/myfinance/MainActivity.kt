@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myfinance.core.presentation.AppHeader
 import com.example.myfinance.core.presentation.AppNavGraph
+import com.example.myfinance.core.presentation.AppScaffold
 import com.example.myfinance.core.presentation.BottomNavigationBar
 import com.example.myfinance.home.presentation.HomeScreen
 import com.example.myfinance.home.presentation.HomeViewModel
@@ -33,21 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             MaterialTheme {
                 val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = {
-                        BottomAppBar {
-                            BottomNavigationBar(navController = navController)
-                        }
-                    }
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(it)
-                    ) {
-                        AppNavGraph(navController = navController)
-                    }
-                }
+                AppNavGraph(navController = navController)
             }
         }
     }
