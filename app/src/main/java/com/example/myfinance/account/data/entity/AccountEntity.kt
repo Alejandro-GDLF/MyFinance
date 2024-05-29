@@ -4,11 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.myfinance.profile.data.dto.Profile
+import com.example.myfinance.profile.data.dto.ProfileEntity
 
 @Entity(tableName = "account",
     foreignKeys = [
-        ForeignKey(entity = Profile::class,
+        ForeignKey(entity = ProfileEntity::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("profile_id"),
             onDelete = ForeignKey.CASCADE,

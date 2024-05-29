@@ -1,5 +1,6 @@
 package com.example.myfinance.core
 
+import com.example.myfinance.profile.data.dto.ProfileEntity
 import com.example.myfinance.transaction.domain.model.TransactionType
 
 object Constants {
@@ -16,5 +17,11 @@ object Constants {
     val PREDEFINED_TRANSACTION_TYPES = listOf(
         DEPOSIT_TRANSACTION_TYPE,
         WITHDRAW_TRANSACTION_TYPE
+    )
+
+    var PROFILE = ProfileEntity(
+        0L,
+        "Nombre1",
+        "ameial@gmail.com"
     )
 }

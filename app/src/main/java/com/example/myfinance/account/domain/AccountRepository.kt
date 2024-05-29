@@ -7,5 +7,5 @@ interface AccountRepository {
 
     suspend fun get(id: Long): Account
 
-    suspend fun save(account: Account, profile: Profile)
+    suspend fun save(account: Account, profile: Profile): Account
 }

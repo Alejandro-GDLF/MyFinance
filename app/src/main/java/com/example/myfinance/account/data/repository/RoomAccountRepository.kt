@@ -10,6 +10,9 @@ import com.example.myfinance.profile.domain.Profile
 import com.example.myfinance.transaction.data.persistance.repository.RoomTransactionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import javax.inject.Inject
 
 class RoomAccountRepository @Inject constructor(
@@ -29,7 +32,18 @@ class RoomAccountRepository @Inject constructor(
     }
 
     override suspend fun get(id: Long): Account = withContext(Dispatchers.IO) {
-        val account = accountDao.get(id)
+        val account =  if( id == 0L ) {
+            val _account = AccountEntity(
+                0L,
+                0L,
+                "Recently created",
+                Instant.now().epochSecond
+            )
+
+            accountDao.insert(_account)
+            _account
+        }
+        else accountDao.get(id)
 
         Log.d("RoomAccountRepository", "Account with id = ${id} is ${account}")
 
@@ -39,7 +53,16 @@ class RoomAccountRepository @Inject constructor(
         )
     }
 
-    override suspend fun save(account: Account, profile: Profile) {
+    override suspend fun save(account: Account, profile: Profile) = withContext(Dispatchers.IO){
         val accountEntity = mapper.toPersistance(account, profile)
+
+        val accountId = accountDao.insert(accountEntity)
+
+        val newAccountEntity = accountEntity.copy(id = accountId)
+
+        return@withContext mapper.toDomain(
+            newAccountEntity,
+            transactionRepository.getAllByAccount(newAccountEntity.id)
+        )
     }
 }
