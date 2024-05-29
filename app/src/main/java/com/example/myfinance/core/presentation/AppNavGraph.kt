@@ -24,6 +24,8 @@ import com.example.myfinance.profile.presentation.new_profile.NewProfile
 import com.example.myfinance.profile.presentation.new_profile.NewProfileViewModel
 import com.example.myfinance.profile.presentation.profile_picker.ProfilePicker
 import com.example.myfinance.profile.presentation.profile_picker.ProfilePickerViewModel
+import com.example.myfinance.transaction.presentation.new_transaction.NewTransaction
+import com.example.myfinance.transaction.presentation.new_transaction.NewTransactionViewModel
 
 @SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
@@ -88,6 +90,22 @@ fun AppNavGraph(navController: NavHostController) {
                 createAccount = viewModel::createAccount,
                 navHostController = navController,
                 updateNumber = viewModel::updateNumber
+            )
+        }
+
+        composable("create_transaction") {
+            val viewModel: NewTransactionViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsState()
+
+            NewTransaction(
+                state = state,
+                navHostController = navController,
+                updateSelectedAccount = viewModel::updateSelectedAccount,
+                updateDescription = viewModel::updateDescription,
+                updateDate = viewModel::updateDate,
+                updateAmount = viewModel::updateAmount,
+                updateType = viewModel::updateType,
+                onCreateTransaction = viewModel::onCreateTransaction
             )
         }
     }
