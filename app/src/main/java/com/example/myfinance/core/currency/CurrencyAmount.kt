@@ -12,6 +12,11 @@ data class CurrencyAmount(
         currency = Currency.getInstance(currencyCode)
     )
 
+    constructor(amount: BigDecimal, currencyCode: String) :this(
+        amount = amount,
+        currency = Currency.getInstance(currencyCode)
+    )
+
     operator fun plus(other: CurrencyAmount): CurrencyAmount {
         return CurrencyAmount(
             this.amount + other.amount,

@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 data class NewTransactionState (
     val type: TransactionType? = null,
-    val amount: CurrencyAmount? = null,
+    val amount: String? = null,
     val date: LocalDateTime? = null,
     val description: String? = null,
 

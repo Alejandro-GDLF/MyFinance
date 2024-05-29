@@ -29,7 +29,7 @@ data class TransactionEntity(
     val typeId: Long,
     @ColumnInfo(name = "account_id", index = true)
     val accountId: Long,
-    val amount: Long,
+    val amount: String,
     val total: Long,
     @ColumnInfo(name = "currency_code")
     val currencyCode: String, // ISO 4217 currency code

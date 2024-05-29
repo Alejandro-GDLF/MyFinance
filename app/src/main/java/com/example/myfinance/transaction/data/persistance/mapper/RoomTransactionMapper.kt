@@ -6,6 +6,7 @@ import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
 import com.example.myfinance.transaction.domain.model.Transaction
 import com.example.myfinance.transaction.domain.model.TransactionType
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.stream.Collectors
@@ -15,7 +16,7 @@ object RoomTransactionMapper {
         id  = transaction.id,
         type = transactionType,
         amount = CurrencyAmount(
-            transaction.amount,
+            transaction.amount.toBigDecimalOrNull() ?: BigDecimal.ZERO,
             transaction.currencyCode
         ),
         date = LocalDateTime.ofEpochSecond(transaction.date, 0, ZoneOffset.UTC),
@@ -31,7 +32,7 @@ object RoomTransactionMapper {
             id = transaction.id ?: 0L,
             typeId = transaction.type.id!!,
             accountId = account.id!!,
-            amount = transaction.amount.amount.toLong(),
+            amount = transaction.amount.amount.toPlainString(),
             currencyCode = transaction.amount.currency.currencyCode,
             date = transaction.date.toEpochSecond(ZoneOffset.UTC),
             description = transaction.description,

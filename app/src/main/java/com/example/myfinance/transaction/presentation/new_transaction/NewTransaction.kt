@@ -82,9 +82,9 @@ fun NewTransaction(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             OutlinedTextField(
-                value = state.amount?.amount?.toPlainString() ?: "",
+                value = state.amount ?: "",
                 onValueChange = updateAmount,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
             )
 
             OutlinedTextField(
@@ -125,7 +125,7 @@ fun NewTransactionPreview() {
     NewTransaction(
         state = NewTransactionState(
             Constants.DEPOSIT_TRANSACTION_TYPE,
-            amount = CurrencyAmount(3456L, "EUR"),
+            amount = "",
             date = LocalDateTime.now(),
             description = "",
             accounts = listOf(),

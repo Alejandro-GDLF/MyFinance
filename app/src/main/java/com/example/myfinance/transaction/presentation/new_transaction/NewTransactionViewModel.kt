@@ -1,6 +1,7 @@
 package com.example.myfinance.transaction.presentation.new_transaction
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.Account
@@ -72,7 +73,7 @@ class NewTransactionViewModel @Inject constructor(
     }
 
     fun updateAmount(amount: String) {
-        _state.update { st -> st.copy(amount = CurrencyAmount(BigDecimal(amount), Currency.getInstance("EUR")))}
+        _state.update { st -> st.copy(amount = amount)}
     }
 
     fun updateType ( type: TransactionType) {
@@ -83,7 +84,7 @@ class NewTransactionViewModel @Inject constructor(
         val description = _state.value.description
         val account = _state.value.selectedAccount
         val type = _state.value.type
-        val amount = _state.value.amount
+        val amount = _state.value.amount?.toBigDecimalOrNull()
         val date = _state.value.date
 
         if( description == null || account == null || type == null || amount == null || date == null )
@@ -92,9 +93,11 @@ class NewTransactionViewModel @Inject constructor(
         val transaction = transactionFactory.create(
             description = description,
             type = type,
-            amount = amount,
+            amount = CurrencyAmount(amount, Currency.getInstance("EUR")),
             date = date
         )
+
+        Log.d("Res", "Introducing new transaction ${transaction}")
 
         viewModelScope.launch {
             transactionRepository.create(account, transaction)
