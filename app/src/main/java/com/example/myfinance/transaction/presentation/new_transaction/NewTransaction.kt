@@ -41,7 +41,7 @@ fun NewTransaction(
     onCreateTransaction: () -> Unit
 ) {
     if (state.isCreated) {
-        navHostController.popBackStack("home", false)
+        navHostController.popBackStack()
         return
     }
 

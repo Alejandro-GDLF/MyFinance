@@ -31,77 +31,61 @@ fun HomeScreen(
         // Imprimir la lista de accounts por consola
         println("Accounts list: ${state.accounts}")
     }
-    Scaffold(
-        topBar = {
-            AppHeader(
-                onUserClick = {},
-                onLogoutClick = {
-                    navController.navigate("auth") {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
-                    }
-                }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        if (state.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .width(64.dp)
+                    .align(Alignment.CenterHorizontally),
+                color = MaterialTheme.colorScheme.secondary,
+                trackColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+            return
+        }
+
+        DropDownAccount(
+            options = state.accounts,
+            defaultAccount = state.selectedAccount,
+            onAccountSelected = updateSelectedAccount
+        )
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            onClick = {
+                navController.navigate("create_account")
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = "Add new account"
             )
         }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp)
-        ) {
+        if (state.selectedAccount == null)return
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        AccountCard(
+            account = state.selectedAccount!!,
+            currencyAmountFormatter = state.currencyFormatter
+        )
 
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .width(64.dp)
-                        .align(Alignment.CenterHorizontally),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant
-                )
-                return@Scaffold
-            }
-
-            DropDownAccount(
-                options = state.accounts,
-                defaultAccount = state.selectedAccount,
-                onAccountSelected = updateSelectedAccount
-            )
-
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                onClick = {
-                    navController.navigate("create_account")
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add new account"
-                )
-            }
-            if (state.selectedAccount == null)return@Scaffold
-            Spacer(modifier = Modifier.height(10.dp))
-
-            AccountCard(
-                account = state.selectedAccount!!,
-                currencyAmountFormatter = state.currencyFormatter
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
             TimeLabeledTransactionList(
                 transactionsGrouped = state.selectedAccount!!.transactions.groupBy { it.date.toLocalDate() },
                 dateFormatter = state.dateFormatter
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
-        }
     }
 }
 

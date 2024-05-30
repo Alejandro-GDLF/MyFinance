@@ -27,7 +27,7 @@ fun NewProfile(
     updateEmail: (String) -> Unit
 ) {
     if( state.isCreated ) {
-        navController.navigate("home") {
+        navController.navigate("main") {
             popUpTo("create_profile") {inclusive = true}
         }
         return

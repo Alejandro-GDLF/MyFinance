@@ -39,54 +39,31 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun StatsScreen(
-    state: StatsScreenState,
-    navController: NavHostController
+    state: StatsScreenState
 ) {
-    AppScaffold(navController = navController) {
-        Scaffold(
-            topBar = {
-                AppHeader(
-                    onUserClick = {},
-                    onLogoutClick = {
-                        navController.navigate("auth") {
-                            popUpTo(navController.graph.startDestinationId) {
-                                inclusive = true
-                            }
-                        }
-                    }
+    if( state.isLoading ) return
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        BalanceCard(
+            state.currencyAmountFormatter.format(state.balance!!),
+            state.currencyAmountFormatter.format(state.spent!!),
+            state.currencyAmountFormatter.format(state.income!!)
+        )
+
+        LazyVerticalGrid(
+            modifier = Modifier.padding(16.dp),
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            items(state.typeAndTotal.toList()) { (type, total) ->
+                TransactionTypeTotal(
+                    transactionType = type,
+                    total = total,
+                    currencyAmountFormatter = state.currencyAmountFormatter
                 )
-            }
-        ) { innerPadding ->
-
-            if (state.isLoading) {
-                return@Scaffold
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                BalanceCard(
-                    state.currencyAmountFormatter.format(state.balance!!),
-                    state.currencyAmountFormatter.format(state.spent!!),
-                    state.currencyAmountFormatter.format(state.income!!)
-                )
-
-                LazyVerticalGrid(
-                    modifier = Modifier.padding(16.dp),
-                    columns = GridCells.Fixed(2),
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    items(state.typeAndTotal.toList()) { (type, total) ->
-                        TransactionTypeTotal(
-                            transactionType = type,
-                            total = total,
-                            currencyAmountFormatter = state.currencyAmountFormatter
-                        )
-                    }
-                }
             }
         }
     }
@@ -199,7 +176,6 @@ fun StatsScreenPreview() {
             balance = CurrencyAmount(0L, "EUR"),
             spent = CurrencyAmount(434L, "EUR"),
             income = CurrencyAmount(3241L, "EUR")
-        ),
-        navController = rememberNavController()
+        )
     )
 }

@@ -49,37 +49,8 @@ fun AppNavGraph(navController: NavHostController) {
             )
         }
 
-        composable("home") {
-            val viewModel: HomeViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsState()
-
-            val navBackStack = navController.currentBackStackEntryAsState().value
-            DisposableEffect(navBackStack) {
-                val observer = LifecycleEventObserver {_, event ->
-                    if( event == Lifecycle.Event.ON_RESUME){
-                        viewModel.collectAccounts()
-
-                    }
-                }
-                navBackStack?.lifecycle?.addObserver(observer)
-
-                onDispose { navBackStack?.lifecycle?.removeObserver(observer) }
-            }
-
-            AppScaffold(navController = navController) {
-                HomeScreen(
-                    state = state,
-                    navController = navController,
-                    updateSelectedAccount = viewModel::updateSelectedAccount
-                )
-            }
-        }
-
-        composable("overview") {
-            val viewModel: StatsViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsState()
-
-            StatsScreen(state = state, navController = navController)
+        composable("main") {
+            AppScaffold(navController = navController)
         }
 
         composable("create_profile") {
@@ -145,17 +116,6 @@ fun AppNavGraph(navController: NavHostController) {
                 updateDescription = viewModel::updateDescription,
                 onCreate = viewModel::create
             )
-        }
-        composable("transactions-list") {
-            val viewModel: TransactionsViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsState()
-
-            AppScaffold(navController = navController) {
-                TransactionsScreen(
-                    state = state,
-                    navController
-                )
-            }
         }
     }
 }
