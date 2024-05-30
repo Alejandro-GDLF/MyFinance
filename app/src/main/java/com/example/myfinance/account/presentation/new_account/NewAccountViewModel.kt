@@ -8,6 +8,7 @@ import com.example.myfinance.account.domain.AccountFactory
 import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.profile.domain.Profile
 import com.example.myfinance.profile.domain.ProfileRepository
+import com.example.myfinance.profile.domain.use_cases.GetProfileByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +21,8 @@ class NewAccountViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val accountFactory: AccountFactory,
     private val profileRepository: ProfileRepository,
-    sharedPreferences: SharedPreferences
+    sharedPreferences: SharedPreferences,
+    private val getProfileByIdUseCase: GetProfileByIdUseCase
 ): ViewModel() {
     private var _state = MutableStateFlow(NewAccountState())
     val state get() = _state.asStateFlow()
@@ -29,7 +31,7 @@ class NewAccountViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            profile = profileRepository.get(
+            profile = getProfileByIdUseCase(
                 sharedPreferences.getLong("profile_id", 0L)
             )
         }
