@@ -55,7 +55,7 @@ fun ProfilePicker(
             OutlinedButton(
                 modifier = Modifier.width(200.dp),
                 onClick = { selectProfile(profile).also {
-                    navHostController.navigate("home")
+                    navHostController.navigate("main")
                 } }
             ) {
                 Text(text = profile.name)

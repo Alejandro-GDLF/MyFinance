@@ -9,18 +9,33 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun AppScaffold(
-    navController: NavHostController,
-    content: @Composable() (BoxScope.()-> Unit)
+    navController: NavHostController
 ) {
+    val mainNavController = rememberNavController()
+
     Scaffold(
         bottomBar = {
             BottomAppBar {
-                BottomNavigationBar(navController = navController)
+                BottomNavigationBar(navController = mainNavController)
             }
+        },
+        topBar = {
+            AppHeader(
+                onUserClick = {},
+                onLogoutClick = {
+                    navController.navigate("auth") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         },
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = { AddTransactionFloatingButton(navController = navController) }
@@ -30,7 +45,7 @@ fun AppScaffold(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            content()
+            MainAppGraph(mainNavController= mainNavController, appNavHostController = navController)
         }
     }
 }

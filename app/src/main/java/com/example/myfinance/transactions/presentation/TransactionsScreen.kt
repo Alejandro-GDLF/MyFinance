@@ -30,8 +30,7 @@ enum class TransactionKeySelector {
 
 @Composable
 fun TransactionsScreen(
-    state: TransactionsState,
-    navController: NavHostController
+    state: TransactionsState
 ) {
     if(state.selectedAccount == null) return
     val transactions = state.selectedAccount.transactions
@@ -84,8 +83,7 @@ fun TransactionScreenPreview() {
         modifier = Modifier.fillMaxSize()
     ) {
         TransactionsScreen(
-            state = state,
-            rememberNavController()
+            state = state
         )
     }
 }
