@@ -1,6 +1,7 @@
 package com.example.myfinance.stats.presentation
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.Account
@@ -35,6 +36,8 @@ class StatsViewModel @Inject constructor(
         viewModelScope.launch {
             val accountId = sharedPreferences.getLong("accountId", 0L)
             val account = accountRepository.get(accountId)
+
+            Log.d("Res", "Retrieved account ${account}")
 
             val balance = getSum(account.transactions)
             val spent = getSum(account.transactions.filter { it.amount.amount < BigDecimal.ZERO })
