@@ -1,6 +1,7 @@
 package com.example.myfinance.transactions.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -62,7 +63,8 @@ fun TransactionsScreen(
         LabeledTransactionList(
             transactionsMap = map,
             dateTimeFormatter = state.dateFormatter,
-            currencyAmountFormatter = state.currencyFormatter
+            currencyAmountFormatter = state.currencyFormatter,
+            modifier = Modifier.fillMaxHeight()
         )
     }
 }
