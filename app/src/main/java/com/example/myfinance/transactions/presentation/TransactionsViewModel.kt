@@ -42,16 +42,7 @@ class TransactionsViewModel @Inject constructor(
             val accountId = sharedPreferences.getLong("accountId", 0L)
             val account = state.value.accounts.find { it.id == accountId } ?: state.value.accounts.firstOrNull()
 
-            updateSelectedAccount(account)
-
-            Log.d("Res", "Selected account ${account}")
-        }
-    }
-
-    fun updateSelectedAccount(account: Account?) {
-        _state.update { st -> st.copy(selectedAccount = account) }
-        if(account != null) {
-            sharedPreferences.edit().putLong("accountId", account.id!!).apply()
+            _state.update { st -> st.copy(selectedAccount = account) }
         }
     }
 
