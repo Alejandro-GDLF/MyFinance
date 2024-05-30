@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
 ): ViewModel() {
     private lateinit var profile: Profile
 
-    var _state = MutableStateFlow(HomeState(
+    private var _state = MutableStateFlow(HomeState(
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy"),
         currencyFormatter = CurrencyAmountFormatter(),
     ))
@@ -34,7 +34,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             profile = profileRepository.get(profileId)
             collectAccounts()
-            updateSelectedAccount(state.value.accounts.firstOrNull())
+            val accountId = sharedPreferences.getLong("accountId", 0L)
+            if (accountId != 0L){
+                val selectedAccount = state.value.accounts.find { it.id == accountId }
+                updateSelectedAccount(selectedAccount)
+            }else{
+                updateSelectedAccount(state.value.accounts.firstOrNull())
+            }
         }
     }
 
@@ -50,5 +56,8 @@ class HomeViewModel @Inject constructor(
 
     fun updateSelectedAccount(account: Account?) {
         _state.update { st -> st.copy(selectedAccount = account) }
+        if(account != null) {
+            sharedPreferences.edit().putLong("accountId", account.id!!).apply()
+        }
     }
 }

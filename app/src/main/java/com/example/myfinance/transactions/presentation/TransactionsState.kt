@@ -6,9 +6,11 @@ import java.time.format.DateTimeFormatter
 
 
 data class TransactionsState (
-    var account: Account,
+    val accounts: List<Account> = listOf(),
+    var account: Account? = null,
     val dateFormatter: DateTimeFormatter,
     val currencyFormatter: CurrencyAmountFormatter,
-    var isLoading: Boolean = false,
+    val isLoading: Boolean = false,
+    val selectedAccount: Account? = null,
     var errorMessage: String? = null
 )

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.Account
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
-import com.example.myfinance.home.presentation.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -14,6 +13,7 @@ import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.profile.domain.Profile
 import com.example.myfinance.profile.domain.ProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 
 import javax.inject.Inject
 
@@ -26,27 +26,42 @@ class TransactionsViewModel @Inject constructor(
 ): ViewModel() {
     private lateinit var profile: Profile
 
-    var _state = MutableStateFlow(HomeState(
+    private var _state = MutableStateFlow(TransactionsState(
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy"),
         currencyFormatter = CurrencyAmountFormatter(),
     ))
     val state get() = _state.asStateFlow()
+    init {
+        val profileId = sharedPreferences.getLong("profile_id", 0L)
 
-    fun loadAccountData(accountId: String) {
-        state = state.copy(isLoading = true)
         viewModelScope.launch {
-            try {
-                // Simular la carga de datos
-                val account = fetchAccountData(accountId)
-                state = state.copy(account = account, isLoading = false)
-            } catch (e: Exception) {
-                state = state.copy(isLoading = false, errorMessage = e.message)
+            profile = profileRepository.get(profileId)
+            val accountId = sharedPreferences.getLong("accountId", 0L)
+            if (accountId != 0L){
+                val selectedAccount = state.value.accounts.find { it.id == accountId }
+                updateSelectedAccount(selectedAccount)
+            }else{
+                updateSelectedAccount(state.value.accounts.firstOrNull())
             }
         }
     }
 
-    private suspend fun fetchAccountData(accountId: String): Account {
-        // Simulación de una llamada de red o base de datos
-        return Account // Reemplazar con la lógica de obtención real
+    fun loadAccountData(accountId: Long) {
+        _state.update{ st -> st.copy(isLoading = true) }
+        viewModelScope.launch {
+            try {
+                val account = accountRepository.get(accountId)
+                _state.update{st -> st.copy(selectedAccount = account, isLoading = false)}
+            } catch (e: Exception) {
+                _state.update{st -> st.copy(isLoading = false, errorMessage = e.message)}
+            }
+        }
     }
+    fun updateSelectedAccount(account: Account?) {
+        _state.update { st -> st.copy(selectedAccount = account) }
+        if(account != null) {
+            sharedPreferences.edit().putLong("accountId", account.id!!).apply()
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.myfinance.core.presentation
 
+import android.accounts.Account
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -9,9 +10,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import com.example.myfinance.account.presentation.new_account.NewAccountScreen
 import com.example.myfinance.account.presentation.new_account.NewAccountViewModel
 import com.example.myfinance.home.presentation.HomeScreen
@@ -24,6 +27,8 @@ import com.example.myfinance.transaction.presentation.new_transaction.NewTransac
 import com.example.myfinance.transaction.presentation.new_transaction.NewTransactionViewModel
 import com.example.myfinance.transaction.presentation.new_transaction_type.NewTransactionType
 import com.example.myfinance.transaction.presentation.new_transaction_type.NewTransactionTypeViewModel
+import com.example.myfinance.transactions.presentation.TransactionsScreen
+import com.example.myfinance.transactions.presentation.TransactionsViewModel
 
 @SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
@@ -130,6 +135,17 @@ fun AppNavGraph(navController: NavHostController) {
                 updateDescription = viewModel::updateDescription,
                 onCreate = viewModel::create
             )
+        }
+        composable("transactions-list") {
+            val viewModel: TransactionsViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsState()
+
+            AppScaffold(navController = navController) {
+                TransactionsScreen(
+                    state = state,
+                    navController
+                )
+            }
         }
     }
 }
