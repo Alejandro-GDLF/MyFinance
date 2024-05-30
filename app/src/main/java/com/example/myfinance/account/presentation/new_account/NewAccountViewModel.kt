@@ -9,6 +9,7 @@ import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.profile.domain.Profile
 import com.example.myfinance.profile.domain.ProfileRepository
 import com.example.myfinance.profile.domain.use_cases.GetProfileByIdUseCase
+import com.example.myfinance.profile.domain.use_cases.SaveAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,11 +19,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewAccountViewModel @Inject constructor(
-    private val accountRepository: AccountRepository,
     private val accountFactory: AccountFactory,
-    private val profileRepository: ProfileRepository,
     sharedPreferences: SharedPreferences,
-    private val getProfileByIdUseCase: GetProfileByIdUseCase
+    private val getProfileByIdUseCase: GetProfileByIdUseCase,
+    private val saveAccountUseCase: SaveAccountUseCase
 ): ViewModel() {
     private var _state = MutableStateFlow(NewAccountState())
     val state get() = _state.asStateFlow()
@@ -39,9 +39,10 @@ class NewAccountViewModel @Inject constructor(
 
     fun createAccount(state: NewAccountState) {
         val account = accountFactory.create(state.number, state.createDate)
+
         viewModelScope.launch {
-            val accountId = accountRepository.save(account, profile)
-            Log.d("Res", "Account created with id: ${accountId}")
+            val savedAccount =saveAccountUseCase(account, profile)
+            Log.d("Res", "Account created with id: ${savedAccount}")
         }
     }
 
