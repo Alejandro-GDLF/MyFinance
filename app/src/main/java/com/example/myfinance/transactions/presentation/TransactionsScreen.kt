@@ -17,9 +17,10 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TransactionsScreen(state: TransactionsState,
                        navController: NavHostController) {
-    if(state.account == null) return
-    val transactions = state.account!!.transactions
+    if(state.selectedAccount == null) return
+    val transactions = state.selectedAccount.transactions
     val map = transactions.groupBy { it.type }
+
 
     Column {
         LabeledTransactionList(

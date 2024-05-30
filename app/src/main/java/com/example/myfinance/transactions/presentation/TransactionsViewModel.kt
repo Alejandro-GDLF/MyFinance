@@ -1,6 +1,7 @@
 package com.example.myfinance.transactions.presentation
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.Account
@@ -21,7 +22,6 @@ import javax.inject.Inject
 @HiltViewModel
 class TransactionsViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val accountRepository: AccountRepository,
     private val profileRepository: ProfileRepository
 ): ViewModel() {
     private lateinit var profile: Profile
@@ -31,32 +31,23 @@ class TransactionsViewModel @Inject constructor(
         currencyFormatter = CurrencyAmountFormatter(),
     ))
     val state get() = _state.asStateFlow()
+
     init {
         val profileId = sharedPreferences.getLong("profile_id", 0L)
 
         viewModelScope.launch {
             profile = profileRepository.get(profileId)
+            _state.update { st -> st.copy(accounts = profileRepository.getAccounts(profile)) }
+
             val accountId = sharedPreferences.getLong("accountId", 0L)
-            if (accountId != 0L){
-                val selectedAccount = state.value.accounts.find { it.id == accountId }
-                updateSelectedAccount(selectedAccount)
-            }else{
-                updateSelectedAccount(state.value.accounts.firstOrNull())
-            }
+            val account = state.value.accounts.find { it.id == accountId } ?: state.value.accounts.firstOrNull()
+
+            updateSelectedAccount(account)
+
+            Log.d("Res", "Selected account ${account}")
         }
     }
 
-    fun loadAccountData(accountId: Long) {
-        _state.update{ st -> st.copy(isLoading = true) }
-        viewModelScope.launch {
-            try {
-                val account = accountRepository.get(accountId)
-                _state.update{st -> st.copy(selectedAccount = account, isLoading = false)}
-            } catch (e: Exception) {
-                _state.update{st -> st.copy(isLoading = false, errorMessage = e.message)}
-            }
-        }
-    }
     fun updateSelectedAccount(account: Account?) {
         _state.update { st -> st.copy(selectedAccount = account) }
         if(account != null) {
