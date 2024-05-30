@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.myfinance.account.domain.Account
 import com.example.myfinance.account.presentation.AccountCard
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
 import com.example.myfinance.core.presentation.AppHeader
@@ -24,6 +25,7 @@ import java.time.format.DateTimeFormatter
 fun HomeScreen(
     state: HomeState,
     navController: NavHostController,
+    updateSelectedAccount: (Account?) -> Unit
 ) {
     LaunchedEffect(state.accounts) {
         // Imprimir la lista de accounts por consola
@@ -63,14 +65,10 @@ fun HomeScreen(
                 return@Scaffold
             }
 
-            var account by remember { mutableStateOf(state.selectedAccount) }
-
             DropDownAccount(
                 options = state.accounts,
-                defaultAccount = account,
-                onAccountSelected = { selectedAccount ->
-                    account = selectedAccount
-                }
+                defaultAccount = state.selectedAccount,
+                onAccountSelected = updateSelectedAccount
             )
 
             Button(
@@ -86,18 +84,18 @@ fun HomeScreen(
                     contentDescription = "Add new account"
                 )
             }
-            if (account == null)return@Scaffold
+            if (state.selectedAccount == null)return@Scaffold
             Spacer(modifier = Modifier.height(10.dp))
 
             AccountCard(
-                account = account!!,
+                account = state.selectedAccount!!,
                 currencyAmountFormatter = state.currencyFormatter
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             TimeLabeledTransactionList(
-                transactionsGrouped = account!!.transactions.groupBy { it.date },
+                transactionsGrouped = state.selectedAccount!!.transactions.groupBy { it.date },
                 dateFormatter = state.dateFormatter
             )
 
@@ -119,5 +117,5 @@ fun HomeScreenPreview() {
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy")
     )
 
-    HomeScreen(state = state, rememberNavController())
+    HomeScreen(state = state, rememberNavController(), {})
 }

@@ -67,7 +67,8 @@ fun AppNavGraph(navController: NavHostController) {
             AppScaffold(navController = navController) {
                 HomeScreen(
                     state = state,
-                    navController
+                    navController = navController,
+                    updateSelectedAccount = viewModel::updateSelectedAccount
                 )
             }
         }
