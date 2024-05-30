@@ -1,7 +1,6 @@
 package com.example.myfinance.transaction.presentation.new_transaction
 
 import com.example.myfinance.account.domain.Account
-import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.transaction.domain.model.TransactionType
 import java.time.LocalDateTime
 

@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewAccountViewModel @Inject constructor(
-    private val accountFactory: AccountFactory,
     sharedPreferences: SharedPreferences,
     private val getProfileByIdUseCase: GetProfileByIdUseCase,
     private val createNewAccountUseCase: CreateNewAccountUseCase

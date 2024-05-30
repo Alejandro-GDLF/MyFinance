@@ -3,7 +3,6 @@ package com.example.myfinance.transaction.data.persistance.repository
 import com.example.myfinance.transaction.data.persistance.dao.TransactionTypeDao
 import com.example.myfinance.transaction.data.persistance.mapper.RoomTransactionTypeMapper
 import com.example.myfinance.transaction.domain.model.TransactionType
-import com.example.myfinance.transaction.domain.repository.TransactionRepository
 import com.example.myfinance.transaction.domain.repository.TransactionTypeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -14,15 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myfinance.account.domain.Account
-import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
 import com.example.myfinance.core.presentation.PreviewPresets
-import com.example.myfinance.transaction.domain.model.Transaction
-import com.example.myfinance.transaction.domain.model.TransactionType
 import com.example.myfinance.transaction.presentation.list.TransactionList
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Currency
 
 @Composable
 fun AccountLastTransactions(

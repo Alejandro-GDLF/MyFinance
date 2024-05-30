@@ -1,6 +1,5 @@
 package com.example.myfinance.profile.presentation.profile_picker
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.myfinance.core.Constants
 import com.example.myfinance.profile.domain.Profile
 
 @Composable

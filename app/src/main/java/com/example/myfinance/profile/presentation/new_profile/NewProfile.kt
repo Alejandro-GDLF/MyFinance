@@ -1,6 +1,5 @@
 package com.example.myfinance.profile.presentation.new_profile
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

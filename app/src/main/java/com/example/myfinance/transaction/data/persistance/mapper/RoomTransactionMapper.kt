@@ -1,6 +1,5 @@
 package com.example.myfinance.transaction.data.persistance.mapper
 
-import androidx.collection.arrayMapOf
 import com.example.myfinance.account.domain.Account
 import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.transaction.data.persistance.entity.TransactionEntity
@@ -9,7 +8,6 @@ import com.example.myfinance.transaction.domain.model.TransactionType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.stream.Collectors
 
 object RoomTransactionMapper {
     fun toDomain(transaction: TransactionEntity, transactionType: TransactionType) = Transaction(

@@ -1,13 +1,10 @@
 package com.example.myfinance.home.presentation
 
 import android.content.SharedPreferences
-import android.util.Log
-import androidx.compose.animation.core.updateTransition
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.Account
-import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
 import com.example.myfinance.profile.domain.Profile
 import com.example.myfinance.profile.domain.ProfileRepository
@@ -21,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val accountRepository: AccountRepository,
     private val profileRepository: ProfileRepository
 ): ViewModel() {
     private lateinit var profile: Profile

@@ -5,11 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,8 +16,6 @@ import com.example.myfinance.account.presentation.new_account.NewAccountScreen
 import com.example.myfinance.account.presentation.new_account.NewAccountViewModel
 import com.example.myfinance.home.presentation.HomeScreen
 import com.example.myfinance.home.presentation.HomeViewModel
-import com.example.myfinance.profile.presentation.login.Login
-import com.example.myfinance.profile.presentation.login.LoginViewModel
 import com.example.myfinance.profile.presentation.new_profile.NewProfile
 import com.example.myfinance.profile.presentation.new_profile.NewProfileViewModel
 import com.example.myfinance.profile.presentation.profile_picker.ProfilePicker
