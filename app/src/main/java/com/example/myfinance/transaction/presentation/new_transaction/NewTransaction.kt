@@ -67,13 +67,10 @@ fun NewTransaction(
         ) {
             Spacer(modifier = Modifier.height(20.dp))
 
-            var account by remember { mutableStateOf(state.accounts.firstOrNull()) }
             DropDownAccount(
                 options = state.accounts,
-                defaultAccount = account,
-                onAccountSelected = { selectedAccount ->
-                    account = selectedAccount
-                }
+                defaultAccount = state.selectedAccount,
+                onAccountSelected = updateSelectedAccount
             )
 
             OutlinedTextField(

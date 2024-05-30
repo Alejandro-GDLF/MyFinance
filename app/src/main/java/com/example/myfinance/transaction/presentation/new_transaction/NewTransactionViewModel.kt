@@ -41,13 +41,11 @@ class NewTransactionViewModel @Inject constructor(
 
             val accounts = profileRepository.getAccounts(profile)
             val types = transactionTypeRepository.getAll()
-            val defaultAccount = accounts.firstOrNull()
 
             _state.update { st -> st.copy(
                 accounts = accounts,
                 transactionType = types,
                 isLoading = false,
-                selectedAccount = defaultAccount
             ) }
         }
     }
@@ -88,8 +86,10 @@ class NewTransactionViewModel @Inject constructor(
         val amount = _state.value.amount?.toBigDecimalOrNull()
         val date = _state.value.date
 
-        if (description == null || account == null || type == null || amount == null || date == null)
+        if (description == null || account == null || type == null || amount == null || date == null){
+            Log.d("CNT", "$description $account $type $amount $date")
             return
+    }
 
         val transaction = transactionFactory.create(
             description = description,

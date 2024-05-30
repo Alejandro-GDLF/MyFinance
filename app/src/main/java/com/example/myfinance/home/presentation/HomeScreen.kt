@@ -95,7 +95,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             TimeLabeledTransactionList(
-                transactionsGrouped = state.selectedAccount!!.transactions.groupBy { it.date },
+                transactionsGrouped = state.selectedAccount!!.transactions.groupBy { it.date.toLocalDate() },
                 dateFormatter = state.dateFormatter
             )
 

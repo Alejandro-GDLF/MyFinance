@@ -12,12 +12,13 @@ import com.example.myfinance.core.presentation.LabelHeader
 import com.example.myfinance.core.presentation.PreviewPresets
 import com.example.myfinance.transaction.domain.model.Transaction
 import com.example.myfinance.transaction.presentation.list.components.TransactionListItem
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun TimeLabeledTransactionList(
-    transactionsGrouped: Map<LocalDateTime, List<Transaction>>,
+    transactionsGrouped: Map<LocalDate, List<Transaction>>,
     dateFormatter: DateTimeFormatter
 ) {
     LazyColumn (
@@ -43,7 +44,7 @@ fun TimeLabeledTransactionList(
 @Composable
 fun TimeLabeledTransactionListPreview() {
     TimeLabeledTransactionList(
-        PreviewPresets.account.transactions.groupBy { it.date },
+        PreviewPresets.account.transactions.groupBy { it.date.toLocalDate() },
         DateTimeFormatter.ofPattern("dd/MM/yy")
     )
 }

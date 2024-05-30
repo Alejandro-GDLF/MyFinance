@@ -50,7 +50,7 @@ fun TransactionsScreen(
             onSelect = { selector ->
                map = when(selector){
                    TransactionKeySelector.DATE -> transactions
-                       .groupBy { it.date }
+                       .groupBy { it.date.toLocalDate() }
                        .mapKeys { state.dateFormatter.format(it.key) }
 
                    TransactionKeySelector.TYPE -> transactions
