@@ -13,23 +13,24 @@ import com.example.myfinance.transaction.presentation.list.components.Transactio
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun <T> LabeledTransactionList(
-    transactionsMap: Map<T, List<Transaction>>,
-    formatter: Formatter<T>
+fun LabeledTransactionList(
+    transactionsMap: Map<String, List<Transaction>>,
+    dateTimeFormatter: DateTimeFormatter,
+    currencyAmountFormatter: CurrencyAmountFormatter
 ) {
     LazyColumn (
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         transactionsMap.forEach { (key, transactions) ->
             item {
-                LabelHeader(text = formatter.format(key))
+                LabelHeader(text = key)
             }
 
             items(transactions) {transaction ->
                 TransactionListItem(
                     transaction = transaction,
-                    dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME,
-                    currencyAmountFormatter = CurrencyAmountFormatter()
+                    dateTimeFormatter = dateTimeFormatter,
+                    currencyAmountFormatter = currencyAmountFormatter
                 )
             }
         }
