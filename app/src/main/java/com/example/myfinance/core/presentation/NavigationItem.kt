@@ -9,5 +9,5 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class NavigationItem(var route: String, val icon: ImageVector, var title: String) {
     object Home: NavigationItem("Home", Icons.Rounded.Home, "Home")
     object Transactions: NavigationItem("transactions-list", Icons.AutoMirrored.Rounded.List, "Transactions")
-    object Overview: NavigationItem("Overview", Icons.Rounded.Person, "Overview")
+    object Overview: NavigationItem("overview", Icons.Rounded.Person, "Overview")
 }

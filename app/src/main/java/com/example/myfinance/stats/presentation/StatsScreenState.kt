@@ -8,10 +8,10 @@ import java.time.format.DateTimeFormatter
 data class StatsScreenState (
     val isLoading: Boolean = true,
     val account: Account? = null,
-    val balance: String = "",
-    val spent: String = "",
-    val income: String = "",
-    val typeAndTotal: Map<String, String> = mapOf(),
+    val balance: CurrencyAmount? = null,
+    val spent: CurrencyAmount? = null,
+    val income: CurrencyAmount? = null,
+    val typeAndTotal: Map<String, CurrencyAmount> = mapOf(),
     val dateTimeFormatter: DateTimeFormatter,
     val currencyAmountFormatter: CurrencyAmountFormatter
 )

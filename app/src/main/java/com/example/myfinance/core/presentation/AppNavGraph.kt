@@ -23,6 +23,8 @@ import com.example.myfinance.profile.presentation.new_profile.NewProfile
 import com.example.myfinance.profile.presentation.new_profile.NewProfileViewModel
 import com.example.myfinance.profile.presentation.profile_picker.ProfilePicker
 import com.example.myfinance.profile.presentation.profile_picker.ProfilePickerViewModel
+import com.example.myfinance.stats.presentation.StatsScreen
+import com.example.myfinance.stats.presentation.StatsViewModel
 import com.example.myfinance.transaction.presentation.new_transaction.NewTransaction
 import com.example.myfinance.transaction.presentation.new_transaction.NewTransactionViewModel
 import com.example.myfinance.transaction.presentation.new_transaction_type.NewTransactionType
@@ -71,6 +73,13 @@ fun AppNavGraph(navController: NavHostController) {
                     updateSelectedAccount = viewModel::updateSelectedAccount
                 )
             }
+        }
+
+        composable("overview") {
+            val viewModel: StatsViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsState()
+
+            StatsScreen(state = state, navController = navController)
         }
 
         composable("create_profile") {

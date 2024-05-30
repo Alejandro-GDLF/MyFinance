@@ -30,10 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.myfinance.core.currency.CurrencyAmount
 import com.example.myfinance.core.currency.CurrencyAmountFormatter
 import com.example.myfinance.core.presentation.AppHeader
+import com.example.myfinance.core.presentation.AppScaffold
 import com.example.myfinance.core.presentation.PreviewPresets
-import com.example.myfinance.transaction.domain.model.Transaction
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -41,43 +42,50 @@ fun StatsScreen(
     state: StatsScreenState,
     navController: NavHostController
 ) {
-    Scaffold(
-        topBar = {
-            AppHeader(
-                onUserClick = {},
-                onLogoutClick = {
-                    navController.navigate("auth") {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
+    AppScaffold(navController = navController) {
+        Scaffold(
+            topBar = {
+                AppHeader(
+                    onUserClick = {},
+                    onLogoutClick = {
+                        navController.navigate("auth") {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
                         }
                     }
-                }
-            )
-        }
-    ) { innerPadding ->
+                )
+            }
+        ) { innerPadding ->
 
-        if( state.account == null ) {
-            return@Scaffold
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            BalanceCard(
-                state.balance,
-                state.spent,
-                state.income
-            )
+            if (state.isLoading) {
+                return@Scaffold
+            }
 
-            LazyVerticalGrid(
-                modifier = Modifier.padding(16.dp),
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(5.dp),
-                horizontalArrangement = Arrangement.spacedBy(5.dp)
-            ){
-                items(state.typeAndTotal.toList()) { (type, total) ->
-                    TransactionTypeTotal(transactionType = type, total = total)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                BalanceCard(
+                    state.currencyAmountFormatter.format(state.balance!!),
+                    state.currencyAmountFormatter.format(state.spent!!),
+                    state.currencyAmountFormatter.format(state.income!!)
+                )
+
+                LazyVerticalGrid(
+                    modifier = Modifier.padding(16.dp),
+                    columns = GridCells.Fixed(2),
+                    verticalArrangement = Arrangement.spacedBy(5.dp),
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    items(state.typeAndTotal.toList()) { (type, total) ->
+                        TransactionTypeTotal(
+                            transactionType = type,
+                            total = total,
+                            currencyAmountFormatter = state.currencyAmountFormatter
+                        )
+                    }
                 }
             }
         }
@@ -87,7 +95,8 @@ fun StatsScreen(
 @Composable
 fun TransactionTypeTotal(
     transactionType: String,
-    total: String
+    total: CurrencyAmount,
+    currencyAmountFormatter: CurrencyAmountFormatter
 ) {
     Card {
         Column(
@@ -95,12 +104,12 @@ fun TransactionTypeTotal(
         ) {
             Text(
                 text = transactionType,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.labelMedium
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = total,
-                style = MaterialTheme.typography.displaySmall
+                text = currencyAmountFormatter.format(total),
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
@@ -184,9 +193,12 @@ fun StatsScreenPreview() {
             dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME,
             currencyAmountFormatter = CurrencyAmountFormatter(),
             typeAndTotal = mapOf(
-                "Something" to "40$",
-                "Something more" to "50$"
-            )
+                "Something" to CurrencyAmount(1000L, "EUR"),
+                "Something more" to CurrencyAmount(43L, "EUR")
+            ),
+            balance = CurrencyAmount(0L, "EUR"),
+            spent = CurrencyAmount(434L, "EUR"),
+            income = CurrencyAmount(3241L, "EUR")
         ),
         navController = rememberNavController()
     )

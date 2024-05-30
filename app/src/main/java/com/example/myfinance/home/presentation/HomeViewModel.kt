@@ -1,6 +1,7 @@
 package com.example.myfinance.home.presentation
 
 import android.content.SharedPreferences
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,6 +59,7 @@ class HomeViewModel @Inject constructor(
         _state.update { st -> st.copy(selectedAccount = account) }
         if(account != null) {
             sharedPreferences.edit().putLong("accountId", account.id!!).apply()
+            Log.d("Res", "Saving in shared preferences this account ${account}")
         }
     }
 }
