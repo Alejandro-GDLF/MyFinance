@@ -5,11 +5,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myfinance.account.domain.AccountFactory
-import com.example.myfinance.account.domain.AccountRepository
 import com.example.myfinance.profile.domain.Profile
-import com.example.myfinance.profile.domain.ProfileRepository
 import com.example.myfinance.profile.domain.use_cases.GetProfileByIdUseCase
-import com.example.myfinance.profile.domain.use_cases.SaveAccountUseCase
+import com.example.myfinance.account.domain.use_case.CreateNewAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +20,7 @@ class NewAccountViewModel @Inject constructor(
     private val accountFactory: AccountFactory,
     sharedPreferences: SharedPreferences,
     private val getProfileByIdUseCase: GetProfileByIdUseCase,
-    private val saveAccountUseCase: SaveAccountUseCase
+    private val createNewAccountUseCase: CreateNewAccountUseCase
 ): ViewModel() {
     private var _state = MutableStateFlow(NewAccountState())
     val state get() = _state.asStateFlow()
@@ -37,16 +35,13 @@ class NewAccountViewModel @Inject constructor(
         }
     }
 
-    fun createAccount(state: NewAccountState) {
-        val account = accountFactory.create(state.number, state.createDate)
-
-        viewModelScope.launch {
-            val savedAccount =saveAccountUseCase(account, profile)
-            Log.d("Res", "Account created with id: ${savedAccount}")
-        }
-    }
-
     fun updateNumber(number: String) {
         _state.update { st -> st.copy(number=number) }
     }
+
+    fun createAccount(state: NewAccountState) = viewModelScope.launch {
+            val savedAccount = createNewAccountUseCase(state.number, state.createDate, profile)
+            Log.d("Res", "Account created with id: ${savedAccount}")
+        }
+
 }
